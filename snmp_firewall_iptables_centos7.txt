@@ -1,0 +1,11 @@
+Habilitar  SNMP en Firewall Centos 7 
+firewall-cmd --zone=public --add-port=161/udp --permanent
+firewall-cmd --zone=public --add-port=161/tcp --permanent
+firewall-cmd --zone=public --add-port=162/udp --permanent
+firewall-cmd --zone=public --add-port=162/tcp --permanent
+
+Habilitar  SNMP en IPTABLES Centos 7   
+sudo iptables -A INPUT -p udp -m multiport --dports 161,162 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp -m multiport --dports 161,162 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp -m multiport --dports 161,162 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --dports 161,162 -m conntrack --ctstate ESTABLISHED -j ACCEPT
